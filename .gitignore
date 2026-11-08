@@ -41,3 +41,8 @@ vignettes/*.pdf
 
 # testing data
 private
+
+# Generated CSV data files
+*.csv
+*.CSV
+data/*.csv
