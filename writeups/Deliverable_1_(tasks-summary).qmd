@@ -1,12 +1,18 @@
 ---
-title: "Summary of exploratory tasks"
-author: 'YOUR NAMES HERE'
+title: "Deliverable 1 - Summary of exploratory tasks"
+author: 'Miles Reynolds, Sid, Iris, Aaron'
 date: today
 ---
 
-### HTML scraping
+### HTML scraping (Preliminary Task 1)
 
 Does including header content improve predictions? Answer the question and provide quantitative evidence supporting your answer.
+
+Including header content does not meaningfully improve binary claim predictions.
+
+To evaluate the impact of header content, we compared a baseline model trained on text extracted exclusively from paragraph tags against an augmented model trained on text extracted from paragraph tags AND heading tags. Both text extractions were vectorized using TF-IDF (10,000 maximum features, English stop words removed), reduced to 50 principal components through TruncatedSVD, and evaluated on an identical 20% stratified test split using logistic regression.
+
+The baseline model achieved a test accuracy of 76.67%, whereas the augmented model reached 76.91%, reflecting a small difference of +0.23%. This shows that the primary discriminative signal for claim relevance remains concentrated in the body paragraphs. Because parsing multiple heading levels increases preprocessing time without producing a meaningful performance gain, including header content is not recommended for this pipeline.
 
 ### Bigrams
 
