@@ -6,6 +6,7 @@ import pandas as pd
 import pyreadr
 import re
 from bs4 import BeautifulSoup
+from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
@@ -68,5 +69,61 @@ from sklearn.model_selection import train_test_split
 # Load preprocessed data
 data = pd.read_csv("data/claims-preprocessed.csv")
 print(data.shape)
+
+# Split data
+X = data["text_clean"].fillna("")
+y = data["bclass_bin"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=15,
+    stratify=y
+)
+
+print("Training Set Size:", len(X_train))
+print("Testing Set Size:", len(X_test))
+
+# Word Tokenization
+word_vectorizer = TfidfVectorizer(
+    ngram_range=(1, 1),
+    stop_words="english",
+    min_df=2
+)
+
+X_word_train = word_vectorizer.fit_transform(X_train)
+X_word_test = word_vectorizer.transform(X_test)
+
+print("Word matrix shape:", X_word_train.shape)
+
+# Bigram Tokenization
+bigram_vectorizer = TfidfVectorizer(
+    ngram_range=(2, 2),
+    stop_words="english",
+    min_df=2
+)
+
+X_bigram_train = bigram_vectorizer.fit_transform(X_train)
+X_bigram_test = bigram_vectorizer.transform(X_test)
+
+print("Bigram matrix shape:", X_bigram_train.shape)
+
+
+# PCA - Word
+word_svd = TruncatedSVD(n_components=20, random_state=42)   # 20 components
+
+X_word_train_pc = word_svd.fit_transform(X_word_train)
+X_word_test_pc = word_svd.transform(X_word_test)
+
+print("Word component shape:", X_word_train_pc.shape)
+
+# PCA - Bigram
+bigram_svd = TruncatedSVD(n_components=20, random_state=42)
+
+X_bigram_train_pc = bigram_svd.fit_transform(X_bigram_train)
+X_bigram_test_pc = bigram_svd.transform(X_bigram_test)
+
+print("Bigram component shape:", X_bigram_train_pc.shape)
 
 
