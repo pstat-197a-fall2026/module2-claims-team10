@@ -1,6 +1,6 @@
 ---
 title: "Deliverable 1 - Summary of exploratory tasks"
-author: 'Miles Reynolds, Sid, Iris, Aaron'
+author: 'Miles Reynolds, Sid, Iris, Aaron, Makala Mesina-Forester'
 date: today
 ---
 
@@ -14,11 +14,14 @@ To evaluate the impact of header content, we compared a baseline model trained o
 
 The baseline model achieved a test accuracy of 76.67%, whereas the augmented model reached 76.91%, reflecting a small difference of +0.23%. This shows that the primary discriminative signal for claim relevance remains concentrated in the body paragraphs. Because parsing multiple heading levels increases preprocessing time without producing a meaningful performance gain, including header content is not recommended for this pipeline.
 
-### Bigrams
+### Bigrams (Preliminary Task 2)
 
 Do bigrams capture additional information relevant to the classification of interest? Answer the question, **briefly** describe what analysis you conducted to arrive at your answer, and provide quantitative evidence supporting your answer.
 
-### Neural net
+To evaluate the performance of unigram vs. bigram models in prediction claims classification, I started by splitting my preprocessed data into training and test sets for both the text and the labels. I then created unigram and bigram vectorizations for the training and test text data. Before fitting the models, I used PCA to reduce the number of componenets to 20. Finally, I fit two models, one based on the word tokens and the other based on the bigram tokens and the unigram log-odds. 
+
+To comapre the models' performance, I used accuracy and AUROC. Both models produced the same accuracy of 75.89%. However, the second Model had a slightly better AUROC, 82.50%, compared to the first model's accuracy of 81.74%. This difference suggests that bigrams capture slightly more information relevant to the classification of interest.
+
 
 Summarize the neural network model you trained by desribing:
 
@@ -29,4 +32,6 @@ Summarize the neural network model you trained by desribing:
 -   training epochs
 
 -   predictive accuracy
+
+
 
