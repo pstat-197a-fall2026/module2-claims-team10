@@ -1,7 +1,7 @@
 ---
 title: "Deliverable 1 - Summary of exploratory tasks"
-author: 'Miles Reynolds, Sid, Iris, Aaron, Makala Mesina-Forester'
-date: today
+author: 'Miles Reynolds, Sid Revanuru, Iris, Aaron, Makala Mesina-Forester'
+date: today66 5zcx  
 ---
 
 ### HTML scraping (Preliminary Task 1)
@@ -22,16 +22,11 @@ To evaluate the performance of unigram vs. bigram models in prediction claims cl
 
 To comapre the models' performance, I used accuracy and AUROC. Both models produced the same accuracy of 75.89%. However, the second Model had a slightly better AUROC, 82.50%, compared to the first model's accuracy of 81.74%. This difference suggests that bigrams capture slightly more information relevant to the classification of interest.
 
+### Training Neural Network models(Preliminary Task 3)
 
-Summarize the neural network model you trained by desribing:
-
--   architecture
-
--   optimization and loss
-
--   training epochs
-
--   predictive accuracy
+I trained 2 neural networks: an unregularized baseline model and a tuned version. The baseline was 1 hidden layer with 25 units without any regularization constraints and 5 epochs. To prevent overfitting, which was a big concern given the high dimensionality of the feature space, the tuned model was expanded to 32 units, incorporated early stopping with 15 epochs, slight increase in dropout rate, and increased L2 regularization. 
+For both models, I used Adam optimization and binary cross-entropy loss. I then evaluated both models KPIs which yielded no definitive winning model. Instead, each model showed different advantages across the different metrics. The accuracy was very similar for both models.
+I then compared the 2 models to the baseline logistic regression model from task 1. The Accuracy for both neural network models(78.27%, 78.5%) beat out the accuracy for both the baseline and augmented logistic regression(76.67%, 76.91%). We see that the neural networks seems to work better for this data compared to the PCA logistic regression.
 
 
 
