@@ -34,6 +34,7 @@ import pickle
 import keras
 from keras import layers
 import tensorflow as tf
+from bs4 import BeautifulSoup
 
 df = pyreadr.read_r("data/claims-clean-example.RData")['claims_clean']
 
@@ -156,26 +157,135 @@ plt.yticks(rotation=0, fontsize=10)
 plt.savefig("results/graphs/multi_logistic_confusion_matrix.png", dpi=300, bbox_inches='tight')
 
 # Multi-class neural network model
-baseline_nn = keras.Sequential(
+# Task 3 found that the tuned neural network performed better than the baseline neural network,
+# in terms of accuracy and ROC-AUC score, so we will use the tuned neural network architecture here.
+multi_nn = keras.Sequential(
     [
         keras.Input(shape=(X_train_pca.shape[1],)),
-        layers.Dense(25, activation="relu"),
+        layers.Dropout(0.4),
+        layers.Dense(
+            32,
+            activation="relu",
+            kernel_regularizer=keras.regularizers.l2(1e-3),
+        ),
+        layers.Dropout(0.3),
         layers.Dense(len(np.unique(y_train)), activation="softmax"),
     ],
-    name="Baseline_NN",
+    name="Multi_NN",
 )
 
-baseline_nn.compile(
+early_stop = keras.callbacks.EarlyStopping(
+    monitor='val_loss',
+    patience=7,
+    restore_best_weights=True
+)
+
+multi_nn.compile(
     loss="sparse_categorical_crossentropy",
     optimizer="adam",
     metrics=["accuracy"],
 )
 
-baseline_nn.fit(
+multi_nn.fit(
     X_train_pca,
     y_train,
     validation_split=0.3,
-    epochs=5,
+    epochs=50,
     batch_size=32,
-    verbose=1,
+    verbose=0,
+    callbacks=[early_stop]
 )
+
+with open('results/best_neural_network_results', 'wb') as f: # saving results 
+        pickle.dump(multi_nn, f)
+
+y_proba_nn = multi_nn.predict(X_test_pca)
+y_pred_nn = np.argmax(y_proba_nn, axis=1)
+
+# Calculate confusion matrix and metrics for multi-class neural network
+confusion_nn = confusion_matrix(y_test, y_pred_nn)
+tp = np.diag(confusion_nn)
+fp = confusion_nn.sum(axis=0) - tp
+fn = confusion_nn.sum(axis=1) - tp
+tn = confusion_nn.sum() - (tp + fp + fn)
+
+print("Multi-class Neural Network Accuracy:", accuracy_score(y_test, y_pred_nn))
+print("Multi-class Neural Network Sensitivity:", np.mean(tp/(tp + fn)))
+print("Multi-class Neural Network Specificity:", np.mean(tn/(tn + fp)))
+print("Multi-class Neural Network AUC Score:", roc_auc_score(y_test, y_proba_nn, multi_class='ovo', average='macro'))
+
+## Confusion matrix for multi-class neural network
+labels = [
+    "N/A: No relevant\ncontent",
+    "Other claim\ncontent",
+    "Physical Activity",
+    "Possible Fatality",
+    "Potentially unlawful\nactivity"
+]
+
+plt.figure(figsize=(11, 7))
+sns.heatmap(confusion_nn, 
+            xticklabels = labels,
+            yticklabels = labels,
+            annot = True,
+            fmt = 'g')
+
+plt.title("Confusion Matrix - Multi-class Neural Network")
+plt.xlabel("Predicted Class", fontsize=12, labelpad=12)
+plt.ylabel("True Class", fontsize=12, labelpad=12)
+plt.xticks(rotation=0, ha="center", fontsize=10)
+plt.yticks(rotation=0, fontsize=10)   
+plt.savefig("results/graphs/multi_nn_confusion_matrix.png", dpi=300, bbox_inches='tight')
+
+# Logistic Regression Results
+# Accuracy: 0.7757
+# Sensitivity: 0.658
+# Specificity: 0.9243
+# AUC Score: 0.9294
+
+# Neural Network Results
+# Accuracy: 0.7747
+# Sensitivity: 0.6497
+# Specificity: 0.9249
+# AUC Score: 0.9258
+
+# Seems like the multi-class logistic regression model performs slightly better than the multi-class neural 
+# network model in terms of accuracy, AUC score, and sensitivity. However, the neural network has a slightly 
+# higher specificity. Overall, both models perform comparably well on this multi-class classification task, 
+# but since the logistic regression model is simpler and more interpretable, it may be preferred for deployment 
+# in this case.
+
+# Testing the best models on the test set and creating the final predictions dataframe
+test_df = pyreadr.read_r("data/claims-test.RData")['claims_test']
+
+## Functions imported from Task 1 for extracting text from HTML
+def extract_p_and_headers(html_text):
+    if not isinstance(html_text, str) or not html_text.strip():
+        return ""
+    
+    soup = BeautifulSoup(html_text, "xml")
+    elements = soup.find_all(["p", "h1", "h2", "h3", "h4", "h5", "h6"])
+    
+    return " ".join(el.get_text(separator=" ", strip=True) for el in elements)
+
+test_df["cleaned_text"] = test_df["text_tmp"].apply(extract_p_and_headers)
+
+print("Actual testing set shape:", test_df.shape)
+
+## Preprocessing the test set
+test_df['cleaned_text'] = test_df['cleaned_text'].fillna('')
+tfidf_matrix_test = tfidf.transform(test_df['cleaned_text'])
+tfidf_df_test = pd.DataFrame(
+    tfidf_matrix_test.toarray(), 
+    columns=tfidf.get_feature_names_out(),
+    index=test_df.index
+)
+
+final_test_df = pd.concat([test_df, tfidf_df_test], axis=1)
+
+X_test_pca = pca.transform(final_test_df.drop(columns=['.id', 'text_tmp', 'cleaned_text']))
+y_pred = multi_logistic.predict(X_test_pca)
+final_matrix = pd.concat([final_test_df['.id'], pd.Series(multiclass_encoder.inverse_transform(y_pred), name='mclass.pred')], axis=1)
+print(final_matrix.head())
+
+## Combining binary and multi-class predictions into a single dataframe
