@@ -18,16 +18,12 @@ binary_labels = {1: "Relevant claim content", 0: "N/A: No relevant content."}
 pred_df["bclass.pred"] = pd.Series(binary_model.predict(text)).map(binary_labels).values
 
 # multiclass
-with open("results/xx", "rb") as f: # xx to be added
-    multiclass = pickle.load(f)
-X = multiclass["pca"].transform(multiclass["tfidf"].transform(text).toarray())
-pred_df["mclass.pred"] = multiclass["encoder"].inverse_transform(multiclass["model"].predict(X))
+multi_df = pd.read_csv("results/pred_df_multi.csv")
+pred_df = pred_df.merge(multi_df, on=".id", how="left")
 
 # save df
 pred_df.to_csv("results/pred_df.csv", index=False)
-pyreadr.write_rdata("results/pred_df.RData", pred_df, df_name="pred_df")
 print(pred_df.shape)
 print(pred_df.head())
-if "mclass.pred" in pred_df:
-    print("\nbclass vs mclass predictions (should mostly agree):")
-    print(pd.crosstab(pred_df["bclass.pred"], pred_df["mclass.pred"]))
+print("\nbclass vs mclass predictions:")
+print(pd.crosstab(pred_df["bclass.pred"], pred_df["mclass.pred"]))
