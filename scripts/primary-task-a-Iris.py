@@ -45,7 +45,7 @@ for name, model in models.items():
 results = pd.DataFrame(rows).sort_values("cv_accuracy", ascending=False)
 print("\n10-fold CV model comparison:")
 print(results.round(4).to_string(index=False))
- 
+
 best_name = results.iloc[0]["model"]
 best_model = models[best_name]
 print(f"\nBest model by CV: {best_name}\n")
@@ -56,3 +56,7 @@ print(classification_report(test["y"], best_model.predict(test["text_clean"]),
 final_model = best_model.fit(df["text_clean"], df["y"])
 with open("results/best-binary-model.pkl", "wb") as f:
     pickle.dump(final_model, f)
+
+# accuracy
+accuracy = accuracy_score(df["y"], final_model.predict(df["text_clean"]))
+print(accuracy)
