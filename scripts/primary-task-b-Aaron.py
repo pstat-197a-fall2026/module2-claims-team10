@@ -288,4 +288,6 @@ y_pred = multi_logistic.predict(X_test_pca)
 final_matrix = pd.concat([final_test_df['.id'], pd.Series(multiclass_encoder.inverse_transform(y_pred), name='mclass.pred')], axis=1)
 print(final_matrix.head())
 
+final_matrix.to_csv("results/pred_df_multi.csv", index=False)
+
 ## Combining binary and multi-class predictions into a single dataframe

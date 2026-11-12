@@ -43,6 +43,4 @@ vignettes/*.pdf
 private
 
 # Generated CSV data files
-*.csv
-*.CSV
 data/*.csv
