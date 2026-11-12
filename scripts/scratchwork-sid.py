@@ -3,6 +3,9 @@ import keras
 from keras import layers
 import numpy as np
 import pandas as pd
+from sklearn.decomposition import TruncatedSVD
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     accuracy_score,
     classification_report,
@@ -16,8 +19,8 @@ from sklearn.model_selection import train_test_split
 import tensorflow as tf
 
 
-np.random.seed(69)
-tf.random.set_seed(69)
+keras.utils.set_random_seed(69)
+tf.config.experimental.enable_op_determinism()
 
 # import pyreadr
 # pyreadr.read_r("../data/claims-clean-example.RData")["claims_clean"].to_csv("../data/claims-clean-example.csv", index=False)
@@ -108,7 +111,7 @@ tuned_NN.compile(
 )
 
 early_stop = keras.callbacks.EarlyStopping(
-    monitor="val_loss", patience=2, restore_best_weights=True
+    monitor="val_binary_accuracy", mode="max", patience=3, restore_best_weights=True
 )
 
 tuned_NN.fit(
@@ -128,32 +131,57 @@ base_preds = (base_probs >= 0.5).astype(int)
 tuned_probs = tuned_NN.predict(X_test, verbose=0).ravel()
 tuned_preds = (tuned_probs >= 0.5).astype(int)
 
+# Task 1 Logistic PCR model on the same split for direct KPI comparison
+tfidf_pcr = TfidfVectorizer(max_features=10000, stop_words="english")
+pca_pcr = TruncatedSVD(n_components=50, random_state=69)
+clf_pcr = LogisticRegression(max_iter=1000, random_state=69)
+
+X_train_pcr = pca_pcr.fit_transform(tfidf_pcr.fit_transform(train_df["text_clean"]))
+X_test_pcr = pca_pcr.transform(tfidf_pcr.transform(test_df["text_clean"]))
+clf_pcr.fit(X_train_pcr, train_labels)
+
+pcr_preds = clf_pcr.predict(X_test_pcr)
+pcr_probs = clf_pcr.predict_proba(X_test_pcr)[:, 1]
+
+# Task 1 reported accuracies
+task1_base_acc = 0.766744
+task1_aug_acc = 0.769053
+
 nn_stats = pd.DataFrame(
     [
         {
-            "Model": "Baseline NN",
+            "Model": "Task 1: Logistic PCR (Same Split)",
+            "Accuracy": accuracy_score(test_labels, pcr_preds),
+            "Precision": precision_score(test_labels, pcr_preds),
+            "Recall": recall_score(test_labels, pcr_preds),
+            "F1-Score": f1_score(test_labels, pcr_preds),
+            "ROC-AUC": roc_auc_score(test_labels, pcr_probs)
+        },
+        {
+            "Model": "Task 3: Baseline NN (25 units)",
             "Accuracy": accuracy_score(test_labels, base_preds),
             "Precision": precision_score(test_labels, base_preds),
             "Recall": recall_score(test_labels, base_preds),
             "F1-Score": f1_score(test_labels, base_preds),
-            "ROC-AUC": roc_auc_score(test_labels, base_probs),
+            "ROC-AUC": roc_auc_score(test_labels, base_probs)
         },
         {
-            "Model": "Tuned NN",
+            "Model": "Task 3: Tuned NN (32 units)",
             "Accuracy": accuracy_score(test_labels, tuned_preds),
             "Precision": precision_score(test_labels, tuned_preds),
             "Recall": recall_score(test_labels, tuned_preds),
             "F1-Score": f1_score(test_labels, tuned_preds),
-            "ROC-AUC": roc_auc_score(test_labels, tuned_probs),
+            "ROC-AUC": roc_auc_score(test_labels, tuned_probs)
         },
     ]
 )
 
-# Table showcasing KPIS for each NN model trained.
+# Table showcasing KPIs and comparison against Task 1 Logistic Regression
 print(nn_stats.to_string(index=False, float_format=lambda x: f"{x:.4f}"))
 
 
-print("Baseline NN Confusion Matrix:")
+
+print("\nBaseline NN Confusion Matrix:")
 print(confusion_matrix(test_labels, base_preds))
 print("Baseline NN Classification Report:")
 print(classification_report(test_labels, base_preds, target_names=["N/A", "Relevant Claim"]))
