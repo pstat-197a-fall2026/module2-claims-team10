@@ -14,11 +14,11 @@ url34,N/A: No relevant content.
 url40,N/A: No relevant content.
 url45,N/A: No relevant content.
 url46,Possible Fatality
-url48,Possible Fatality
+url48,N/A: No relevant content.
 url55,N/A: No relevant content.
 url58,N/A: No relevant content.
 url59,N/A: No relevant content.
-url65,N/A: No relevant content.
+url65,Potentially unlawful activity
 url68,N/A: No relevant content.
 url71,N/A: No relevant content.
 url72,N/A: No relevant content.
@@ -91,7 +91,7 @@ url294,N/A: No relevant content.
 url299,Possible Fatality
 url302,N/A: No relevant content.
 url304,N/A: No relevant content.
-url305,N/A: No relevant content.
+url305,Other claim content
 url308,N/A: No relevant content.
 url313,Possible Fatality
 url314,N/A: No relevant content.
@@ -233,7 +233,7 @@ url778,N/A: No relevant content.
 url782,Possible Fatality
 url783,N/A: No relevant content.
 url785,N/A: No relevant content.
-url791,N/A: No relevant content.
+url791,Possible Fatality
 url792,N/A: No relevant content.
 url795,N/A: No relevant content.
 url796,N/A: No relevant content.
@@ -245,8 +245,8 @@ url806,N/A: No relevant content.
 url809,N/A: No relevant content.
 url811,N/A: No relevant content.
 url817,N/A: No relevant content.
-url820,N/A: No relevant content.
-url821,N/A: No relevant content.
+url820,Potentially unlawful activity
+url821,Potentially unlawful activity
 url825,N/A: No relevant content.
 url826,N/A: No relevant content.
 url828,N/A: No relevant content.
@@ -268,15 +268,15 @@ url880,Possible Fatality
 url883,N/A: No relevant content.
 url884,N/A: No relevant content.
 url887,N/A: No relevant content.
-url890,N/A: No relevant content.
+url890,Other claim content
 url891,N/A: No relevant content.
 url894,N/A: No relevant content.
-url895,N/A: No relevant content.
+url895,Other claim content
 url896,N/A: No relevant content.
 url899,Potentially unlawful activity
 url905,N/A: No relevant content.
 url909,N/A: No relevant content.
-url912,N/A: No relevant content.
+url912,Possible Fatality
 url921,N/A: No relevant content.
 url923,N/A: No relevant content.
 url930,N/A: No relevant content.
@@ -394,12 +394,12 @@ url1290,N/A: No relevant content.
 url1292,N/A: No relevant content.
 url1297,Possible Fatality
 url1301,N/A: No relevant content.
-url1302,N/A: No relevant content.
+url1302,Other claim content
 url1304,N/A: No relevant content.
 url1306,N/A: No relevant content.
 url1310,N/A: No relevant content.
 url1315,Possible Fatality
-url1317,N/A: No relevant content.
+url1317,Other claim content
 url1320,N/A: No relevant content.
 url1324,N/A: No relevant content.
 url1326,N/A: No relevant content.
@@ -412,7 +412,7 @@ url1351,N/A: No relevant content.
 url1352,N/A: No relevant content.
 url1360,N/A: No relevant content.
 url1361,N/A: No relevant content.
-url1368,Other claim content
+url1368,N/A: No relevant content.
 url1370,N/A: No relevant content.
 url1371,N/A: No relevant content.
 url1373,N/A: No relevant content.
@@ -456,7 +456,7 @@ url1498,N/A: No relevant content.
 url1499,Potentially unlawful activity
 url1507,Possible Fatality
 url1508,Possible Fatality
-url1510,Possible Fatality
+url1510,N/A: No relevant content.
 url1513,N/A: No relevant content.
 url1515,N/A: No relevant content.
 url1521,N/A: No relevant content.
@@ -481,7 +481,7 @@ url1575,N/A: No relevant content.
 url1578,N/A: No relevant content.
 url1580,N/A: No relevant content.
 url1583,Potentially unlawful activity
-url1584,N/A: No relevant content.
+url1584,Potentially unlawful activity
 url1593,N/A: No relevant content.
 url1594,Potentially unlawful activity
 url1595,Potentially unlawful activity
@@ -560,7 +560,7 @@ url1863,Potentially unlawful activity
 url1864,Potentially unlawful activity
 url1868,Possible Fatality
 url1871,Possible Fatality
-url1872,N/A: No relevant content.
+url1872,Potentially unlawful activity
 url1873,N/A: No relevant content.
 url1874,N/A: No relevant content.
 url1879,N/A: No relevant content.
@@ -600,7 +600,7 @@ url1958,N/A: No relevant content.
 url1959,N/A: No relevant content.
 url1968,N/A: No relevant content.
 url1970,N/A: No relevant content.
-url1972,Other claim content
+url1972,N/A: No relevant content.
 url1974,Possible Fatality
 url1977,N/A: No relevant content.
 url1979,N/A: No relevant content.
@@ -621,15 +621,15 @@ url2032,N/A: No relevant content.
 url2039,N/A: No relevant content.
 url2042,N/A: No relevant content.
 url2043,N/A: No relevant content.
-url2049,N/A: No relevant content.
-url2058,Other claim content
+url2049,Possible Fatality
+url2058,N/A: No relevant content.
 url2060,N/A: No relevant content.
 url2063,N/A: No relevant content.
 url2064,N/A: No relevant content.
 url2068,N/A: No relevant content.
 url2069,N/A: No relevant content.
 url2076,N/A: No relevant content.
-url2078,N/A: No relevant content.
+url2078,Potentially unlawful activity
 url2081,N/A: No relevant content.
 url2086,N/A: No relevant content.
 url2088,N/A: No relevant content.
@@ -690,13 +690,13 @@ url2229,Possible Fatality
 url2231,N/A: No relevant content.
 url2234,N/A: No relevant content.
 url2240,N/A: No relevant content.
-url2241,N/A: No relevant content.
-url2249,N/A: No relevant content.
+url2241,Potentially unlawful activity
+url2249,Other claim content
 url2252,N/A: No relevant content.
 url2273,N/A: No relevant content.
 url2274,N/A: No relevant content.
 url2276,N/A: No relevant content.
-url2278,N/A: No relevant content.
+url2278,Other claim content
 url2280,N/A: No relevant content.
 url2283,N/A: No relevant content.
 url2284,N/A: No relevant content.
@@ -723,7 +723,7 @@ url2340,Potentially unlawful activity
 url2341,Possible Fatality
 url2343,N/A: No relevant content.
 url2344,N/A: No relevant content.
-url2345,Physical Activity
+url2345,N/A: No relevant content.
 url2351,N/A: No relevant content.
 url2353,N/A: No relevant content.
 url2363,N/A: No relevant content.
@@ -813,7 +813,7 @@ url2664,N/A: No relevant content.
 url2669,N/A: No relevant content.
 url2670,N/A: No relevant content.
 url2673,N/A: No relevant content.
-url2677,Other claim content
+url2677,N/A: No relevant content.
 url2678,N/A: No relevant content.
 url2679,N/A: No relevant content.
 url2680,N/A: No relevant content.
@@ -824,7 +824,7 @@ url2694,Possible Fatality
 url2695,N/A: No relevant content.
 url2699,N/A: No relevant content.
 url2701,N/A: No relevant content.
-url2708,N/A: No relevant content.
+url2708,Potentially unlawful activity
 url2709,N/A: No relevant content.
 url2720,N/A: No relevant content.
 url2727,N/A: No relevant content.
@@ -832,7 +832,7 @@ url2728,Possible Fatality
 url2731,N/A: No relevant content.
 url2734,N/A: No relevant content.
 url2737,N/A: No relevant content.
-url2742,N/A: No relevant content.
+url2742,Other claim content
 url2746,Possible Fatality
 url2751,N/A: No relevant content.
 url2752,N/A: No relevant content.
@@ -849,7 +849,7 @@ url2798,N/A: No relevant content.
 url2802,N/A: No relevant content.
 url2806,N/A: No relevant content.
 url2811,N/A: No relevant content.
-url2813,N/A: No relevant content.
+url2813,Other claim content
 url2818,N/A: No relevant content.
 url2821,N/A: No relevant content.
 url2827,N/A: No relevant content.
@@ -863,7 +863,7 @@ url2854,N/A: No relevant content.
 url2855,Possible Fatality
 url2860,N/A: No relevant content.
 url2863,N/A: No relevant content.
-url2866,N/A: No relevant content.
+url2866,Potentially unlawful activity
 url2867,N/A: No relevant content.
 url2871,Possible Fatality
 url2873,N/A: No relevant content.

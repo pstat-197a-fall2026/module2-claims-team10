@@ -51,12 +51,11 @@ cleaned_df = cleaned_df[['.id', 'text_clean', 'mclass_encoded']]
 train_df, test_df = train_test_split(cleaned_df, test_size=0.2, random_state=69, stratify=cleaned_df['mclass_encoded'])
 
 # Vectorize text data using TF-IDF into bigrams 
-# Task 2 found that bigrams performed better than unigrams, so we will use bigrams here.
 tfidf = TfidfVectorizer(
     stop_words="english", 
-    ngram_range=(2, 2),
+    ngram_range=(1, 2),
     min_df=3, 
-    max_features=10000, 
+    max_features=50000, 
     sublinear_tf=True
 )
 
@@ -105,7 +104,7 @@ logistic_gs = GridSearchCV(
     },
     scoring='roc_auc_ovo',
     return_train_score=True,
-    cv=5,
+    cv=10,
 )
 
 if not os.path.exists('results/best_logistic_results'):
@@ -238,20 +237,19 @@ plt.yticks(rotation=0, fontsize=10)
 plt.savefig("results/graphs/multi_nn_confusion_matrix.png", dpi=300, bbox_inches='tight')
 
 # Logistic Regression Results
-# Accuracy: 0.7757
-# Sensitivity: 0.658
-# Specificity: 0.9243
-# AUC Score: 0.9294
+# Accuracy: 0.799
+# Sensitivity: 0.689
+# Specificity: 0.934
+# AUC Score: 0.940
 
 # Neural Network Results
-# Accuracy: 0.7747
-# Sensitivity: 0.6497
-# Specificity: 0.9249
-# AUC Score: 0.9258
+# Accuracy: 0.7967
+# Sensitivity: 0.699
+# Specificity: 0.934
+# AUC Score: 0.939
 
 # Seems like the multi-class logistic regression model performs slightly better than the multi-class neural 
-# network model in terms of accuracy, AUC score, and sensitivity. However, the neural network has a slightly 
-# higher specificity. Overall, both models perform comparably well on this multi-class classification task, 
+# network model in terms of accuracy and AUC score. Overall, both models perform comparably well on this multi-class classification task, 
 # but since the logistic regression model is simpler and more interpretable, it may be preferred for deployment 
 # in this case.
 
