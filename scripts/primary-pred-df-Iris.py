@@ -27,3 +27,9 @@ print(pred_df.shape)
 print(pred_df.head())
 print("\nbclass vs mclass predictions:")
 print(pd.crosstab(pred_df["bclass.pred"], pred_df["mclass.pred"]))
+
+# bclass vs mclass predictions:
+# mclass.pred                N/A: No relevant content.  Other claim content  ...  Possible Fatality  Potentially unlawful activity
+# bclass.pred                                                                ...                                                  
+# N/A: No relevant content.                        490                    1  ...                  6                              3
+# Relevant claim content                           265                    9  ...                 99                             54
