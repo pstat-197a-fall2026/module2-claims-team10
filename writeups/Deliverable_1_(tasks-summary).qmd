@@ -1,6 +1,6 @@
 ---
 title: "Deliverable 1 - Summary of exploratory tasks"
-author: 'Miles Reynolds, Sid Revanuru, Iris, Aaron, Makala Mesina-Forester'
+author: 'Miles Reynolds, Sid Revanuru, Iris Li, Aaron, Makala Mesina-Forester'
 date: today66 5zcx  
 ---
 

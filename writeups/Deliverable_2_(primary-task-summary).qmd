@@ -1,6 +1,6 @@
 ---
 title: "Predictive modeling of claims status"
-author: 'YOUR NAMES HERE'
+author: 'Miles Reynolds, Sid Revanuru, Iris Li, Aaron, Makala Mesina-Forester'
 date: today
 ---
 
@@ -8,7 +8,7 @@ date: today
 
 Provide a 3-5 sentence summary of your work on the primary task. Indicate what input data was used, what method was used for binary class predictions, what method was used for multiclass predictions, and what estimated accuracies were achieved.
 
-> *Header and paragraph content was scraped from the raw webpages and processed into term frequencies of word tokens. For binary classification, a two-layer neural network yielded an estimated 81.4% accuracy; for multiclass classification, a support vector machine gave 78% accuracy.*
+Header and paragraph content was scraped from the raw webpages and processed into term frequencies of word tokens. For binary classification, a linear support vector machine trained on TF-IDF word and bigram features yielded an estimated 80.1% accuracy on a held-out set (82.4% in 10-fold cross-validation); *for multiclass classification, a support vector machine gave 78% accuracy.*
 
 ### Preprocessing
 
@@ -32,11 +32,15 @@ Describe your final predictive models. Include one paragraph with details on the
 
 -   training method
 
+For binary classification, we compared three models on the same TF-IDF features: logistic regression, linear support vector machine (SVM), and multinomial naive Bayes models. The regularization strengths (C = 10 for logistic regression, C = 1 for the SVM) were taken from an earlier 5-fold grid search over C (logistic regression: 1, 10, 100; SVM: 0.1, 1, 10) and then held fixed; naive Bayes used default settings. The data was split 80/20, stratified by class. The models were compared with 10-fold stratified cross-validation on the training set.
+
 For multi-class classification, we compared model results between a multi-class logistic regression model and a neural network model following the results derived from the preliminary tasks. Upon hyperparameter tuning and comparing the AUC and accuracy scores, we ended up using a multi-class logistic regression model with an elastic net penalty. The resulting parameters for the elastic net penalty were `l1_ratio` = 0.44 and `C` = 0.5. They were selected using a grid search cross-validation technique that performed cross-validation across different combinations of the hyperparameters. The training and testing split used was 80/20 with 5 layers of cross-validation.
 
 ### Results
 
 Indicate the predictive accuracy of the binary classifications and the multiclass classifications. Provide a table for each, and report sensitivity, specificity, and accuracy.[^1]
+
+For binary classification models, the linear support vector machine SVM has the highest cross-validation accuracy (82.4%, versus 82.2% for logistic regression and 76.6% for naive Bayes).
 
 [^1]: Read [this article](https://yardstick.tidymodels.org/articles/multiclass.html) on multiclass averaging.
 
