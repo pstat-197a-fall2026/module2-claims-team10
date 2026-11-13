@@ -1,0 +1,50 @@
+---
+title: "Predictive modeling of claims status"
+author: 'YOUR NAMES HERE'
+date: today
+---
+
+### Abstract
+
+Provide a 3-5 sentence summary of your work on the primary task. Indicate what input data was used, what method was used for binary class predictions, what method was used for multiclass predictions, and what estimated accuracies were achieved.
+
+> *Header and paragraph content was scraped from the raw webpages and processed into term frequencies of word tokens. For binary classification, a two-layer neural network yielded an estimated 81.4% accuracy; for multiclass classification, a support vector machine gave 78% accuracy.*
+
+### Preprocessing
+
+In one paragraph lay out your preprocessing pipeline. No need to provide exact step-by-step detail; just give an overview of the main components:
+
+-   what text content was extracted from HTML
+
+-   how text was cleaned
+
+-   how cleaned text was represented quantitatively
+
+Following preliminary task 1, the preprocessing pipeline first involved extracting the <p> and header content (<h>) from the HTML files. The raw content text were then cleaned by imputing missing values and using TF-IDF vectorization to turn the corpus into quantitative values, separating them by bigrams after considering the results of task 2. The response variables were also encoded using a LabelEncoder() to turn the string values into numeric values. Following that, we reduced the dimensionality of the feature space by using PCA.
+
+### Methods
+
+Describe your final predictive models. Include one paragraph with details on the binary classification approach, and one on the multiclass approach. Include for each:
+
+-   what ML/statistical method was used
+
+-   model specification and hyperparameter selection
+
+-   training method
+
+For multi-class classification, we compared model results between a multi-class logistic regression model and a neural network model following the results derived from the preliminary tasks. Upon hyperparameter tuning and comparing the AUC and accuracy scores, we ended up using a multi-class logistic regression model with an elastic net penalty. The resulting parameters for the elastic net penalty were `l1_ratio` = 0.44 and `C` = 0.5. They were selected using a grid search cross-validation technique that performed cross-validation across different combinations of the hyperparameters. The training and testing split used was 80/20 with 5 layers of cross-validation.
+
+### Results
+
+Indicate the predictive accuracy of the binary classifications and the multiclass classifications. Provide a table for each, and report sensitivity, specificity, and accuracy.[^1]
+
+[^1]: Read [this article](https://yardstick.tidymodels.org/articles/multiclass.html) on multiclass averaging.
+
+|             | Binary | Multi-Class (Logistic Regression) |
+|-------------|--------|-----------------------------------|
+| Sensitivity |        | 0.658                             |
+| Specificity |        | 0.924                             |
+| Accuracy    |        | 0.776                             |
+| AUC         |        | 0.929                             |
+
+{place result dataframe and comparison of the results}

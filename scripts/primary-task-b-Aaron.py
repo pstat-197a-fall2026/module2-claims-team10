@@ -115,7 +115,7 @@ if not os.path.exists('results/best_logistic_results'):
 
 ## Evaluating best fit model on test set
 multi_logistic = pickle.load(open('results/best_logistic_results', 'rb'))
-print("Best parameters for multi-class logistic regression:", "L1 Ratio:", multi_logistic.get_params()['l1_ratio'], "C:", multi_logistic.get_params()['C'])
+print("Best parameters for multi-class logistic regression:", "L1 Ratio:", multi_logistic.get_params()['l1_ratio'], "C:", 1/multi_logistic.get_params()['C'])
 
 multi_logistic.fit(X_train_pca, y_train)
 y_pred_logistic = multi_logistic.predict(X_test_pca)
@@ -290,4 +290,3 @@ print(final_matrix.head())
 
 final_matrix.to_csv("results/pred_df_multi.csv", index=False)
 
-## Combining binary and multi-class predictions into a single dataframe
