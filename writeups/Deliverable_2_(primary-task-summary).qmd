@@ -10,7 +10,7 @@ The input data used for training the models were header and paragraph content sc
 
 ### Preprocessing
 
-Following preliminary task 1, the preprocessing pipeline first involved extracting the (<p>) and header content (<h>) from the HTML files. The raw content text were then cleaned by imputing missing values and using TF-IDF vectorization to turn the corpus into quantitative values, separating them by bigrams after considering the results of task 2. The response variables were also encoded using a LabelEncoder() to turn the string values into numeric values. Following that, we reduced the dimensionality of the feature space by using PCA.
+Following preliminary task 1, the preprocessing pipeline first involved extracting the paragraph (`<p>`) and header content (`<h>`) from the HTML files. The raw content text were then cleaned by imputing missing values and using TF-IDF vectorization to turn the corpus into quantitative values, separating them by bigrams after considering the results of task 2. The response variables were also encoded using a LabelEncoder() to turn the string values into numeric values. Following that, we reduced the dimensionality of the feature space by using PCA.
 
 ### Methods
 
