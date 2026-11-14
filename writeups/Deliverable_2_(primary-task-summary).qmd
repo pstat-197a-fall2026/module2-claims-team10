@@ -6,49 +6,29 @@ date: today
 
 ### Abstract
 
-Provide a 3-5 sentence summary of your work on the primary task. Indicate what input data was used, what method was used for binary class predictions, what method was used for multiclass predictions, and what estimated accuracies were achieved.
-
-Header and paragraph content was scraped from the raw webpages and processed into term frequencies of word tokens. For binary classification, a linear support vector machine trained on TF-IDF word and bigram features yielded an estimated 80.1% accuracy on the testing data (82.4% in 10-fold cross-validation); *for multiclass classification, a support vector machine gave 78% accuracy.*
+The input data used for training the models were header and paragraph content scraped from webpages. We vectorized the data using term frequencies of the word tokens to turn the string data into numeric data, required for training. Additional feature reduction using PCA was conducted to reduce the dimensionality of the dataset. For binary class predictions of the provided testing set, a support vector machine was used, while, for multiclass predictions, a multiclass logistic regression model was used. Testing the models against a heldout test set, the support machine resulted in an accuracy of 80.1%. The multiclass logistic regression yielded an accuracy of 79.9%.
 
 ### Preprocessing
 
-In one paragraph lay out your preprocessing pipeline. No need to provide exact step-by-step detail; just give an overview of the main components:
-
--   what text content was extracted from HTML
-
--   how text was cleaned
-
--   how cleaned text was represented quantitatively
-
-Following preliminary task 1, the preprocessing pipeline first involved extracting the <p> and header content (<h>) from the HTML files. The raw content text were then cleaned by imputing missing values and using TF-IDF vectorization to turn the corpus into quantitative values, separating them by bigrams after considering the results of task 2. The response variables were also encoded using a LabelEncoder() to turn the string values into numeric values. Following that, we reduced the dimensionality of the feature space by using PCA.
+Following preliminary task 1, the preprocessing pipeline first involved extracting the (<p>) and header content (<h>) from the HTML files. The raw content text were then cleaned by imputing missing values and using TF-IDF vectorization to turn the corpus into quantitative values, separating them by bigrams after considering the results of task 2. The response variables were also encoded using a LabelEncoder() to turn the string values into numeric values. Following that, we reduced the dimensionality of the feature space by using PCA.
 
 ### Methods
 
-Describe your final predictive models. Include one paragraph with details on the binary classification approach, and one on the multiclass approach. Include for each:
-
--   what ML/statistical method was used
-
--   model specification and hyperparameter selection
-
--   training method
-
 For binary classification, we compared three models on the same TF-IDF features: logistic regression, linear support vector machine (SVM), and naive Bayes models. The regularization strengths (C = 10 for logistic regression, C = 1 for the SVM) were taken from an earlier 5-fold grid search over C (logistic regression: 1, 10, 100; SVM: 0.1, 1, 10), and naive Bayes used default settings. The data was split 80/20, stratified by class. The models were compared with 10-fold stratified cross-validation on the training set.
 
-For multi-class classification, we compared model results between a multi-class logistic regression model and a neural network model following the results derived from the preliminary tasks. Upon hyperparameter tuning and comparing the AUC and accuracy scores, we ended up using a multi-class logistic regression model with an elastic net penalty. The resulting parameters for the elastic net penalty were `l1_ratio` = 0.44 and `C` = 0.5. They were selected using a grid search cross-validation technique that performed cross-validation across different combinations of the hyperparameters. The training and testing split used was 80/20 with 5 layers of cross-validation.
+For multi-class classification, we compared model results between a multiclass logistic regression model and a neural network model following the conclusions derived from the preliminary tasks. Upon hyperparameter tuning and comparing the AUC and accuracy scores, we ended up using a multiclass logistic regression model with an elastic net penalty. The resulting parameters for the elastic net penalty were `l1_ratio` = 0.22 and `C` = 0.5. They were selected using a grid search cross-validation technique that performed cross-validation across different combinations of the hyperparameters. The training and testing split used was 80/20 with 5 layers of cross-validation.
 
 ### Results
 
-Indicate the predictive accuracy of the binary classifications and the multiclass classifications. Provide a table for each, and report sensitivity, specificity, and accuracy.[^1]
+For binary classification models, the linear support vector machine SVM has the highest accuracy (80.1%, versus 79.4% for logistic regression and 76.2% for naive Bayes).
 
-For binary classification models, the linear support vector machine SVM has the highest cross-validation accuracy (82.4%, versus 82.2% for logistic regression and 76.6% for naive Bayes).
+For multiclass classification, the multiclass logistic regression with `l1_ratio` = 0.22 and `C` = 0.5 had the highest accuracy (79.9%, versus 79.6% for a neural network).
 
-[^1]: Read [this article](https://yardstick.tidymodels.org/articles/multiclass.html) on multiclass averaging.
+Results of the models (binary and multiclass) tested against a holdout testing set are shown below:
 
-|             | Binary | Multi-Class (Logistic Regression) |
-|-------------|--------|-----------------------------------|
-| Sensitivity | 0.813  | 0.658                             |
-| Specificity | 0.788  | 0.924                             |
-| Accuracy    | 0.801  | 0.776                             |
-| AUC         | 0.874  | 0.929                             |
-
-{place result dataframe and comparison of the results}
+|             | Binary (SVM) | Multiclass (Logistic Regression) |
+|-------------|--------------|----------------------------------|
+| Sensitivity | 0.813        | 0.689                            |
+| Specificity | 0.788        | 0.934                            |
+| Accuracy    | 0.801        | 0.799                            |
+| AUC         | 0.874        | 0.940                            |

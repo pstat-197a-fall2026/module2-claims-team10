@@ -22,7 +22,7 @@ multi_df = pd.read_csv("results/pred_df_multi.csv")
 pred_df = pred_df.merge(multi_df, on=".id", how="left")
 
 # save df
-pred_df.to_csv("results/pred_df.csv", index=False)
+pred_df.to_csv("results/preds-group10.csv", index=False)
 print(pred_df.shape)
 print(pred_df.head())
 print("\nbclass vs mclass predictions:")
